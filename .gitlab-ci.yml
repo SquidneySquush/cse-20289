@@ -1,0 +1,4 @@
+image: pbui/cse-20289-sp20-assignments
+test:
+  script:
+    - make BRANCH=$CI_BUILD_REF_NAME test
