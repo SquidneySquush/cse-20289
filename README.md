@@ -2,8 +2,8 @@
 
 This is the [CSE-20289-SP20] reading and homework assignments repository for:
 
-* **Name**:  Domer McDomerson
-* **NetID**: dmcdomer
+* **Name**:  Sydney Hnat
+* **NetID**: shnat
 
 ## Readings
 
@@ -68,3 +68,4 @@ Each **homework** is due at **noon** on **Saturday** and is worth **10** points
 - [Homework 10](https://www3.nd.edu/~pbui/teaching/cse.20289.sp20/homework10.html)
 
 [CSE-20289-SP20]:   https://www3.nd.edu/~pbui/teaching/cse.20289.sp20/
+
