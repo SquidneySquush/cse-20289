@@ -1,0 +1,14 @@
+{
+"q1":[
+"head",
+"tail",
+"grep",
+"uniq",
+"sed",
+"sort",
+"cut",
+"diff",
+"tr",
+"awk"
+]
+}
