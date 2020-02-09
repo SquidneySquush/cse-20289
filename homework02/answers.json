@@ -1,0 +1,21 @@
+{
+"q01":"jubilee.campus.nd.edu",
+"q02":[
+	"2",
+	"12"
+],
+"q03":"22e0c0f9dc63b5baaeedfca581eaa7f5",
+"q04":[
+	"ipp",
+	"smtp",
+	"ssh",
+	"sunrpc"
+],
+"q05":[
+	"b",
+	"d"
+],
+"q06":"c",
+"q07":"LOCKBOX=`readlink -f $1`",
+"q08":"$LOCKBOX $password && { echo \"$password\"; exit 0; }"
+}
