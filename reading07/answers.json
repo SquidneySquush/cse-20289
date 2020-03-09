@@ -1,0 +1,14 @@
+{
+	"q1":[
+	"stateless",
+	"pure",
+	"side effects",
+	"first-class",
+	"map",
+	"filter",
+	"reduce",
+	"lambda",
+	"list comprehensions",
+	"generator"
+]
+}
