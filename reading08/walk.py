@@ -4,15 +4,15 @@ import os
 import sys
 
 # TODO: Determine which directory to walk from command line argument
-if len(sys.argv[1]) >= 1:
+try:
     directory = sys.argv[1]
-else:
+except IndexError:
     directory = os.getcwd()
 
 # TODO: Walk specified directory in sorted order and print out each entry's
 # file name
 
-for dirpath, dirnames, files in os.walk(directory):
-    print(f'{dirpath}')
-    for file_name in files:
-        print(file_name)
+dir_content = sorted(os.listdir(directory))
+
+for item in dir_content:
+    print(item)
