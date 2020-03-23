@@ -1,0 +1,15 @@
+{
+  "q1": [
+    "fork",
+    "exec",
+    "wait",
+    "exit",
+    "kill"
+  ],
+  "q2": [
+   "parent",
+   "process",
+   "nondeter",
+   "load"
+ ]
+}
