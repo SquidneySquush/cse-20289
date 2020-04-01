@@ -55,10 +55,7 @@ def move_files(files, path):
     zip_file = zip(files, open(path).read().split())
     for old_file, new_file in zip_file:
         if not new_file == old_file:
-            try:
-                os.rename(old_file, new_file)
-            except:
-                return False
+            os.rename(old_file, new_file)
         else:
             return False
 
