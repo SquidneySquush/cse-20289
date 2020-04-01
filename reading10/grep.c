@@ -16,37 +16,46 @@ void usage(int status) {
     exit(status);                                                                 /* 2 */
 }
 
-/* Main Execution */
-
-int main(int argc, char *argv[]) {
-    int argind = 1;
+bool cat_stream(FILE *stream, char *pattern) {
     char buffer[BUFSIZ];
 
-    /* Parse command line arguments */
-    PROGRAM_NAME = argv[0];
-    if (argv[1] == NULL){
-      usage(1);
-    }                                                  /* 5 */
-    while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-') {   /* 6 */
-        char *arg = argv[argind++];
-        switch (arg[1]) {
-            case 'h':
-                usage(0);
-                break;
-            default:
-                usage(1);
-                break;
-        }
-    }
-
-    while (fgets(buffer, BUFSIZ, stdin)){
-      if (strstr(buffer, argv[1])){
+    while (fgets(buffer, BUFSIZ, stream)) {
+      if (strstr(buffer, pattern)){
          fputs(buffer, stdout);
+         buffer[0] = 0;
       }
       else{
          return 1;
       }
     }
+    return true;
+}
+
+/* Main Execution */
+
+int main(int argc, char *argv[]) {
+    int argind = 1;
+
+    /* Parse command line arguments */
+    PROGRAM_NAME = argv[0];
+    if (argv[1] == NULL){
+      usage(1);
+    }
+    char* pattern = argv[1];
+                                          /* 5 */
+   while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-'){   /* 6 */
+       char *arg = argv[argind++];
+       switch (arg[1]) {
+            case 'h':
+               usage(0);
+               break;
+            default:
+               usage(1);
+               break;
+        }
+    }
+
+    return !cat_stream(stdin, pattern);
 
 }
 
