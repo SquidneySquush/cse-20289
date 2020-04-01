@@ -28,14 +28,16 @@ def error(message, status=1):
 
 def alarm_handler(signum, frame):
     ''' Alarm handler that raises InterruptedError '''
-    global Stop, ChildPid, ChildStatus  # set globals so they can be edited
+    global Stop, ChildPid#, ChildStatus  # set globals so they can be edited
 
     Stop = True
 
     ChildPid = os.getpid()
-    ChildStatus = os.kill(ChildPid, signal.SIGKILL)
+    os.kill(ChildPid, signal.SIGKILL)
 
-    pid, status = os.wait()
+    #pid, status = os.wait()
+    #return status
+    status = 9#signal.SIGKILL
     return status
 
     raise InterruptedError (status)
@@ -54,7 +56,7 @@ def timeit(argv, timeout):
         - Prints total elapsed time
         - Exits with the status of the child process
     '''
-    global pid
+    #global pid
     try:
         pid = os.fork()    # TODO: Create new process
         start = time.time()                # start timer
@@ -64,32 +66,38 @@ def timeit(argv, timeout):
 
     if pid == 0:      # Child
         try:
-            print(argv)
-            os.execvp(argv[1], argv[1:])      # TODO: Execute new code in current process
+            #print(argv)
+            os.execvp(argv[0], argv)      # TODO: Execute new code in current process
         except (IndexError, OSError):
-            #error(argv[0], status=1)
-            sys.exit(3)
+            if len(argv) < 1:
+                usage(1)
+            error(argv[0], status=1)
+            #sys.exit(3)
 
     else:             # Parent
-        signal.signal(signal.SIGALRM, alarm_handler) # TODO:If recieves signal run alam_handler
-        signal.alarm(timeout)           #set alarm for time in timeout
+        try:
+            signal.signal(signal.SIGALRM, alarm_handler) # TODO:If recieves signal run alam_handler
+            signal.alarm(timeout)           #set alarm for time in timeout
 
-        while not ChildPid:
-            #time.sleep(timeout)
-            try:
-                pid, status = os.wait()
-            except ChildProcessError:
-                break
-
-        seconds = time.time() # end elapsed time from start of function
-        finalTime = (seconds-start)
-
-        if os.WIFEXITED(status):
-            print(f'Exit Status: {os.WEXITSTATUS(status)}')
+            while not ChildPid:
+                #time.sleep(timeout)
+                try:
+                    pid, status = os.wait()
+                    seconds = time.time() # end elapsed time from start of function
+                    finalTime = (seconds-start)
+                    print('Time Elapsed: ', finalTime)
+                except ChildProcessError:
+                    break
+            seconds = time.time() # end elapsed time from start of function
+            finalTime = (seconds-start)
             print('Time Elapsed: ', finalTime)
-        else:
-            print(f'Termination Status: {os.WTREMSIG(status)}')
-            #return False
+        except:
+            if os.WIFEXITED(status):
+                print(f'Exit Status: {os.WEXITSTATUS(status)}')
+
+            else:
+                print(f'Termination Status: {os.WTREMSIG(status)}')
+                #return False
 
 
 def main():
@@ -97,26 +105,29 @@ def main():
     command and timeout. '''
     #timeout = 10
     timeToggle = False
-    argv = sys.argv[1:]
+    arguments = sys.argv[1:]
 
-    if len(argv) == 0:
-        usage(1)
-    while argv and argv[0].startswith('-'): ## checks for -h flag
-        argument = argv.pop(0)
+    #if len(arguments) == 0:
+    #    usage(1)
+    while len(arguments) and arguments[0].startswith('-'): ## checks for -h flag
+        argument = arguments.pop(0)
         if argument == '-t':
             timeToggle = True
         if argument == '-h':
             usage(0)
+        else:
+            break
 
     if timeToggle:
-        timeout = int(argv.pop(0))
+        timeout = arguments.pop(0)
+        timeout = int(timeout)
     else:
         timeout = 10
 
-    if len(argv) <= 1:
-        usage(1)
+    #if len(arguments) <= 1:
+    #    usage(1)
 
-    timeit(argv, timeout)
+    timeit(arguments, timeout)
 
 
 # Main Execution
