@@ -1,0 +1,25 @@
+{
+  "q01": [
+   "save_files_with_close",
+    "edit_files_environ_dict",
+    "edit_files_fork_false",
+    "edit_files_fork_oserror",
+    "move_files_rename_oserror"
+   ],
+   "q02": [
+     "save_files_files",
+     "save_files_permissions",
+     "edit_files_processes",
+     "edit_files_permissions",
+     "move_files_permissions"
+  ],
+  "q03": [
+  "alarm_handler_parent",
+  "time_seconds",
+  "wait_twice",
+  "exit_signal"
+],
+"q04": [
+   "identity"
+]
+}
