@@ -12,23 +12,21 @@ char * PROGRAM_NAME = NULL;
 /* Functions */
 
 void usage(int status) {
-    fprintf(stderr, "Usage: %s\n", PROGRAM_NAME);                                    /* 1 */
-    exit(status);                                                                 /* 2 */
+    fprintf(stderr, "Usage: %s\n", PROGRAM_NAME);
+    exit(status);
 }
 
 bool cat_stream(FILE *stream, char *pattern) {
     char buffer[BUFSIZ];
+    bool grep = false;
 
     while (fgets(buffer, BUFSIZ, stream)) {
-      if (strstr(buffer, pattern)){
+      if (strstr(buffer, pattern) != NULL){
          fputs(buffer, stdout);
-         buffer[0] = 0;
-      }
-      else{
-         return 1;
+         grep = true;
       }
     }
-    return true;
+    return grep;
 }
 
 /* Main Execution */
@@ -41,9 +39,8 @@ int main(int argc, char *argv[]) {
     if (argv[1] == NULL){
       usage(1);
     }
-    char* pattern = argv[1];
-                                          /* 5 */
-   while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-'){   /* 6 */
+
+   while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-'){
        char *arg = argv[argind++];
        switch (arg[1]) {
             case 'h':
@@ -55,8 +52,12 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    return !cat_stream(stdin, pattern);
-
+    if( argc > 1 ){
+      return !cat_stream(stdin, argv[1]);
+   }
+   else{
+      usage(1);
+   }
 }
 
 /* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */
