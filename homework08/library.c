@@ -4,7 +4,7 @@
 
 #include <ctype.h>
 #include <string.h>
-#include <stdlib.h>
+#include <math.h>
 
 /**
  * Convert all characters in string to lowercase.
@@ -112,14 +112,13 @@ void    str_translate(char *s, char *from, char *to) {
 
 	for (char *c = from; *c; c++){
 		letter[(int)*c] += *to;
-		to ++;
+		to++;
 	}
 
-	for (char *str = s; *str ; str++){
-		if(letter[(int)*str] != 0){
-			*str = letter[(int)*str];
-		}
-		return;
+	for (char *str = s; *str; str++){
+			if(letter[(int)*str] != 0){
+				*str = letter[(int)*str];
+			}
 	}
 }
 
@@ -130,7 +129,19 @@ void    str_translate(char *s, char *from, char *to) {
  * @return          Converted integer value
  **/
 int	str_to_int(const char *s, int base) {
-    return 0;
+	int num = 0;
+	int j = 1 ;
+
+	for (const char *c = s; *c; c++){
+		if (isdigit(*c)){
+			num = num + ((*c - '0') * (j));
+		}
+		if (isalpha(*c)){
+			num = num + ((toupper(*c) - 55) * pow(base, j));
+		}
+
+	}
+    return num;
 }
 
 /* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */

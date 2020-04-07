@@ -6,7 +6,11 @@ AR=		ar
 ARFLAGS=	rcs
 
 TARGETS=	libstr.a \
-		libstr.so
+		libstr.so \
+		str-static \
+		str-dynamic \
+		test-str \
+		test-all
 
 all:		$(TARGETS)
 
@@ -48,8 +52,8 @@ libstr.so:	library.o
 main.o:		main.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-str-dynamic.dynamic:	main.o libstr.so
+str-dynamic:	main.o libstr.so
 	$(LD) $(LDFLAGS) -o $@ $< -lstr
 
-str-static.static: main.o libstr.a
+str-static: main.o libstr.a
 	$(LD) $(LDFLAGS) -static -o $@ $< -lstr
