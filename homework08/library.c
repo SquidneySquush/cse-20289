@@ -60,28 +60,22 @@ void    str_chomp(char *s) {
  **/
 void    str_strip(char *s) {
 	if (strlen(s)!=0){
-		 char *headread = s;
-		char *headwrite = headread;
+		char *start = s;
+		char *end = s + strlen(s) -1;;
 
-		while(isspace(*headread)){
-				++headread;
+		while(isspace(*start)){
+			start++;
 		}
-		while(*headread){
-			*headwrite = *headread;
-			*headread = ' ';
-			headwrite++;
-			headread++;
+		while(isspace(*end)){
+			end--;
 		}
 
-		char *tailread = headwrite;
-		char *tailwrite = headwrite;
-		while(isspace(*tailwrite)){
-			tailread--;
-			tailwrite--;
-			if (isspace(*tailwrite)){
-				*tailwrite = '\0';
-			}
+		while( start <= end){
+			*s = *start;
+			s++;
+			start++;
 		}
+		*s = 0;
 	}
 
 }
@@ -132,14 +126,42 @@ int	str_to_int(const char *s, int base) {
 	int num = 0;
 	int j = 1 ;
 
-	for (const char *c = s; *c; c++){
-		if (isdigit(*c)){
-			num = num + ((*c - '0') * (j));
-		}
-		if (isalpha(*c)){
-			num = num + ((toupper(*c) - 55) * pow(base, j));
-		}
-
+	switch(base){
+		case 2:
+			for (const char *c = s + strlen(s) - 1; c >= s; c--){
+				if (isdigit(*c)){
+					num += (((int)*c - 48) * j);
+				}
+				j *= base;
+			}
+			break;
+		case 8:
+			for (const char *c = s + strlen(s) - 1; c >= s; c--){
+				if (isdigit(*c)){
+					num += (((int)*c - 48) * j);
+				}
+				j *= base;
+			}
+			break;
+		case 10:
+			for (const char *c = s + strlen(s) - 1; c >= s; c--){
+				if (isdigit(*c)){
+					num += (((int)*c - 48) * j);
+				}
+				j *= base;
+			}
+			break;
+		case 16:
+			for (const char *c = s + strlen(s) - 1; c >= s; c--){
+				if (isdigit(*c)){
+					num += (((int)*c - 48) * j);
+				}
+				if (isalpha(*c)){
+					num += (((int)toupper(*c)) - 55) * j;
+				}
+				j *= base;
+			}
+			break;
 	}
     return num;
 }
