@@ -43,13 +43,13 @@ void translate_stream(FILE *stream, char *source, char *target, int flag) {
 
     str_chomp(buffer);
   if( source != NULL && target != NULL){
-    //str_chomp(buffer);
+
     str_translate(buffer,source,target);
-    //buffer[strlen(buffer)-1] = '\0';
+
   }
 
   if (flag & STRIP){
-    //str_chomp(buffer);
+
     str_strip(buffer);
   }
   if (flag & REVERSE){
@@ -99,15 +99,12 @@ int main(int argc, char *argv[]) {
       case 't':
         flag ^= 1<<5;
         break;
-    //  default:
-      //  usage(1);
-      //  break;
+   
       }
     }
   char *source = argv[argind++];
   char *target = argv[argind++];
-  //char *source = 0;
-  //char *target = 0;
+
   /* TODO: Translate Stream */
   translate_stream(stdin, source, target, flag );
 
