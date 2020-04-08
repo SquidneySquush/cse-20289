@@ -4,7 +4,7 @@
 
 #include <ctype.h>
 #include <string.h>
-#include <math.h>
+
 
 /**
  * Convert all characters in string to lowercase.

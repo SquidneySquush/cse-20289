@@ -1,5 +1,5 @@
 CC=		gcc
-CFLAGS=		-g -Wall -std=gnu99 -fPIC
+CFLAGS=		-g -Wall -std=gnu99
 LD=		gcc
 LDFLAGS=	-L.
 AR=		ar
@@ -7,11 +7,9 @@ ARFLAGS=	rcs
 
 TARGETS=	libstr.a \
 		libstr.so \
-		str-static \
 		str-dynamic \
-		test-str \
-		test-all
-
+		str-static
+		
 all:		$(TARGETS)
 
 test:
@@ -35,14 +33,14 @@ test-quiz:	answers.json
 	./test_quiz.py
 
 clean:
-	rm -f $(TARGETS) *.o #*.so *.a
+	rm -f $(TARGETS) *.o *.so *.a
 
 # TODO: Add rules for libstr.a libstr.so
 library.o:	library.c
-	$(CC) $(CFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) -fPIC -c -o $@ $^
 
 libstr.a: 	library.o
-	$(AR) $(ARFLAGS) -c -o $@ $^
+	$(AR) $(ARFLAGS) $@ $^
 
 libstr.so:	library.o
 	$(LD) $(LDFLAGS) -shared -o $@ $^
