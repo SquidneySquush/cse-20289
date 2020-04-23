@@ -1,0 +1,19 @@
+{
+  "q1": [
+    "http",
+    "xavier.h4x0r.space",
+    "9999",
+    "/scripts/hello.py",
+    "name=Bob"
+  ],
+  "q2": [
+    "socket",
+    "getaddrinfo",
+    "bind",
+    "getnameinfo",
+    "connect",
+    "listen",
+    "accept",
+    "fdopen"
+  ]
+}
